@@ -1,0 +1,2 @@
+# SolidalWeb
+Faqja jone personale
