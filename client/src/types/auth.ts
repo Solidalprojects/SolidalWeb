@@ -1,10 +1,14 @@
-// types/auth.ts
 export interface UserType {
   id: number;
-  name: string;
+  username: string;
   email: string;
-  role: 'client' | 'admin';
-  createdAt: string;
+  first_name: string;
+  last_name: string;
+  is_client: boolean;
+  is_agency_admin: boolean;
+  phone?: string;
+  company?: string;
+  profile_image?: string;
 }
 
 export interface LoginCredentials {

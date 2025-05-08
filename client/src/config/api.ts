@@ -1,4 +1,4 @@
-// config/api.ts
+// client/src/config/api.ts
 
 // Base API URL - adjust this based on your Django backend location
 export const API_URL = 'http://localhost:8000/api';
@@ -6,27 +6,25 @@ export const API_URL = 'http://localhost:8000/api';
 // API endpoints for different services
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: '/auth/login',
-    SIGNUP: '/auth/signup',
-    LOGOUT: '/auth/logout',
-    CURRENT_USER: '/auth/user',
+    LOGIN: '/auth/login/',
+    SIGNUP: '/auth/signup/',
+    LOGOUT: '/auth/logout/',
+    CURRENT_USER: '/auth/user/',
   },
   USER: {
-    SETTINGS: '/users/settings',
-    PROFILE: '/users/profile',
+    SETTINGS: '/auth/user/settings/',
+    PROFILE: '/auth/user/profile/',
   },
   DASHBOARD: {
-    SUMMARY: '/dashboard/summary',
+    SUMMARY: '/dashboard/summary/',
   },
   WEBSITE: {
-    SECTIONS: '/website/sections',
-    SECTION: (id: number) => `/website/sections/${id}`,
-    PUBLISH: '/website/publish',
+    LIST: '/websites/',
+    DETAIL: (id: number) => `/websites/${id}/`,
+    SECTIONS: (websiteId: number) => `/websites/${websiteId}/sections/`,
+    SECTION: (websiteId: number, sectionId: number) => `/websites/${websiteId}/sections/${sectionId}/`,
   },
   ANALYTICS: {
-    DATA: '/analytics/data',
-    VISITORS: '/analytics/visitors',
-    TRAFFIC_SOURCES: '/analytics/traffic-sources',
-    PAGES: '/analytics/pages',
+    DATA: '/analytics/data/',
   },
 };

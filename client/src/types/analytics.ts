@@ -1,4 +1,4 @@
-// types/analytics.ts
+// client/src/types/analytics.ts
 export type TimeRange = 'week' | 'month' | 'year';
 
 export interface PageAnalytics {

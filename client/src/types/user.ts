@@ -1,4 +1,4 @@
-// types/user.ts
+// client/src/types/user.ts
 export interface UserSettings {
   name: string;
   email: string;

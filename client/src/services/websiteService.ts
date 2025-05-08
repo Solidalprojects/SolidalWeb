@@ -1,18 +1,60 @@
-// services/websiteService.ts
+// client/src/services/websiteService.ts
 import { API_ENDPOINTS } from '../config/api';
-import { apiService } from './apiService';
-import { WebsiteSection } from '../types/website';
+import axios from 'axios';
+import { API_URL } from '../config/api';
+import { WebsiteSection, Website } from '../types/website';
 
 export const websiteService = {
-  async getWebsiteSections(): Promise<WebsiteSection[]> {
-    return await apiService.get<WebsiteSection[]>(API_ENDPOINTS.WEBSITE.SECTIONS);
+  async getWebsites(): Promise<Website[]> {
+    try {
+      const response = await axios.get(
+        `${API_URL}${API_ENDPOINTS.WEBSITE.LIST}`,
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      return response.data.results || [];
+    } catch (error) {
+      console.error('Get websites error:', error);
+      throw error;
+    }
   },
 
-  async getWebsiteSection(id: number): Promise<WebsiteSection> {
-    return await apiService.get<WebsiteSection>(API_ENDPOINTS.WEBSITE.SECTION(id));
+  async getWebsiteSections(websiteId: number): Promise<WebsiteSection[]> {
+    try {
+      const response = await axios.get(
+        `${API_URL}${API_ENDPOINTS.WEBSITE.SECTIONS(websiteId)}`,
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      return response.data.results || [];
+    } catch (error) {
+      console.error('Get website sections error:', error);
+      throw error;
+    }
   },
 
-  async updateWebsiteSection(id: number, section: WebsiteSection): Promise<WebsiteSection> {
-    return await apiService.put<WebsiteSection>(API_ENDPOINTS.WEBSITE.SECTION(id), section);
+  async getWebsiteSection(websiteId: number, sectionId: number): Promise<WebsiteSection> {
+    try {
+      const response = await axios.get(
+        `${API_URL}${API_ENDPOINTS.WEBSITE.SECTION(websiteId, sectionId)}`,
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Get website section error:', error);
+      throw error;
+    }
+  },
+
+  async updateWebsiteSection(websiteId: number, sectionId: number, section: WebsiteSection): Promise<WebsiteSection> {
+    try {
+      const response = await axios.put(
+        `${API_URL}${API_ENDPOINTS.WEBSITE.SECTION(websiteId, sectionId)}`,
+        section,
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Update website section error:', error);
+      throw error;
+    }
   },
 };

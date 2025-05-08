@@ -1,5 +1,4 @@
-// pages/auth/SignupPage.tsx
-
+// client/src/pages/auth/SignupPage.tsx
 import { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -27,11 +26,26 @@ const SignupPage = () => {
       return;
     }
 
+    if (password.length < 8) {
+      setFormError('Password must be at least 8 characters long');
+      return;
+    }
+
     try {
       await signup(name, email, password);
       navigate('/dashboard', { replace: true });
-    } catch (err) {
-      // Error is handled in the auth context
+    } catch (err: any) {
+      console.error('Signup error:', err);
+      if (err?.response?.data?.errors) {
+        // Handle validation errors from Django
+        const validationErrors = err.response.data.errors;
+        const errorMessages = Object.values(validationErrors)
+          .flat()
+          .join(', ');
+        setFormError(errorMessages);
+      } else {
+        setFormError(err?.response?.data?.message || 'Failed to create account. Please try again.');
+      }
     }
   };
 
@@ -105,6 +119,9 @@ const SignupPage = () => {
                 className="mt-1 block w-full px-3 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 placeholder="••••••••"
               />
+              <p className="mt-1 text-sm text-gray-400">
+                Password must be at least 8 characters long
+              </p>
             </div>
             
             <div>

@@ -1,8 +1,8 @@
-// components/Navbar.tsx
+// client/src/components/Navbar.tsx
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../assets/solidal_logo.png';
 import { useAuth } from '../hooks/useAuth';
+import logo from '../assets/solidal_logo.png';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -83,10 +83,15 @@ const Navbar = () => {
                 <div className="flex items-center gap-4">
                   <Link 
                     to="/dashboard"
-                    className="text-white hover:text-blue-400 transition-colors duration-300"
+                    className="text-white hover:text-blue-400 transition-colors duration-300 flex items-center"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Dashboard
+                    <span className="mr-2">Dashboard</span>
+                    {user && (
+                      <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-semibold">
+                        {user.first_name ? user.first_name.charAt(0) : user.email.charAt(0)}
+                      </div>
+                    )}
                   </Link>
                   <button 
                     onClick={logout}

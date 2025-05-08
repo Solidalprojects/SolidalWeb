@@ -1,4 +1,4 @@
-// components/auth/ProtectedRoute.tsx
+// client/src/pages/auth/ProtectedRoute.tsx
 import { ReactNode } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -20,6 +20,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   }
 
   if (!isAuthenticated) {
+    // Redirect to login page and save the location they were trying to visit
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
@@ -27,7 +28,3 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 };
 
 export default ProtectedRoute;
-
-
-
-

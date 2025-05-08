@@ -1,8 +1,8 @@
-// types/dashboard.ts
+// client/src/types/dashboard.ts
 export interface DashboardSummary {
   websiteUrl: string;
   websiteName: string;
-  status: 'online' | 'maintenance' | 'offline';
+  status: 'development' | 'live' | 'maintenance' | 'offline';
   visitors: number;
   pageViews: number;
   avgTime: string;

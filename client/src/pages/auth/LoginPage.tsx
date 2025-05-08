@@ -1,4 +1,4 @@
-// pages/auth/LoginPage.tsx
+// client/src/pages/auth/LoginPage.tsx
 import { useState, FormEvent } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
@@ -11,6 +11,8 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Get the path the user was trying to access before being redirected to login
+  // Default to dashboard if no previous location
   const from = location.state?.from?.pathname || '/dashboard';
 
   const handleSubmit = async (e: FormEvent) => {
@@ -25,8 +27,9 @@ const LoginPage = () => {
     try {
       await login(email, password);
       navigate(from, { replace: true });
-    } catch (err) {
-      // Error is handled in the auth context
+    } catch (err: any) {
+      console.error('Login error:', err);
+      setFormError(err?.response?.data?.message || 'Login failed. Please check your credentials.');
     }
   };
 

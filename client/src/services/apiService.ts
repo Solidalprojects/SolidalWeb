@@ -1,4 +1,4 @@
-// services/apiService.ts
+// client/src/services/apiService.ts
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { API_URL } from '../config/api';
 import { ApiResponse, ApiError } from '../types/api';
@@ -64,18 +64,6 @@ export const apiService = {
   async put<T, D = any>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
     try {
       const response: AxiosResponse<ApiResponse<T>> = await apiClient.put(url, data, config);
-      return response.data.data;
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        throw error.response.data as ApiError;
-      }
-      throw { status: 500, message: 'Unknown error occurred' };
-    }
-  },
-
-  async patch<T, D = any>(url: string, data?: D, config?: AxiosRequestConfig): Promise<T> {
-    try {
-      const response: AxiosResponse<ApiResponse<T>> = await apiClient.patch(url, data, config);
       return response.data.data;
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

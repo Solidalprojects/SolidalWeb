@@ -1,4 +1,4 @@
-// context/AuthContext.tsx
+// client/src/context/AuthContext.tsx
 import { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 import { UserType } from '../types/auth';
 import authService from '../services/authService';
@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const initAuth = async () => {
       try {
+        // Check if user is authenticated on load
         const userData = await authService.getCurrentUser();
         if (userData) {
           setUser(userData);
@@ -61,8 +62,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const userData = await authService.login(email, password);
       setUser(userData);
       setIsAuthenticated(true);
-    } catch (error) {
-      setError('Invalid email or password');
+    } catch (error: any) {
+      setError(error?.response?.data?.message || 'Invalid email or password');
       throw error;
     } finally {
       setLoading(false);
@@ -76,16 +77,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const userData = await authService.signup(name, email, password);
       setUser(userData);
       setIsAuthenticated(true);
-    } catch (error) {
-      setError('Failed to create account');
+    } catch (error: any) {
+      setError(error?.response?.data?.message || 'Failed to create account');
       throw error;
     } finally {
       setLoading(false);
     }
   };
 
-  const logout = () => {
-    authService.logout();
+  const logout = async () => {
+    await authService.logout();
     setUser(null);
     setIsAuthenticated(false);
   };
