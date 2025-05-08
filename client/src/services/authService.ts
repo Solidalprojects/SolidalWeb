@@ -1,16 +1,18 @@
 // services/authService.ts
 import { API_ENDPOINTS } from '../config/api';
 import { apiService } from './apiService';
-import { UserType, LoginCredentials, SignupCredentials, AuthResponse } from '../types/auth';
+import { UserType, AuthResponse } from '../types/auth';
 
 const authService = {
-  async login(credentials: LoginCredentials): Promise<UserType> {
+  async login(email: string, password: string): Promise<UserType> {
+    const credentials = { email, password };
     const response = await apiService.post<AuthResponse>(API_ENDPOINTS.AUTH.LOGIN, credentials);
     localStorage.setItem('token', response.token);
     return response.user;
   },
 
-  async signup(credentials: SignupCredentials): Promise<UserType> {
+  async signup(name: string, email: string, password: string): Promise<UserType> {
+    const credentials = { name, email, password };
     const response = await apiService.post<AuthResponse>(API_ENDPOINTS.AUTH.SIGNUP, credentials);
     localStorage.setItem('token', response.token);
     return response.user;

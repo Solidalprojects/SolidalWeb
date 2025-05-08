@@ -6,14 +6,14 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
-import PortfolioPage from './pages/PortfolioPage';
+import PortfolioPage from './pages/PortofolioPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/auth/LoginPage';
 import SignupPage from './pages/auth/SignupPage';
 import Dashboard from './pages/dashboard/Dashboard';
 import Footer from './components/Footer';
-import ProtectedRoute from './components/auth/ProtectedRoute';
+import ProtectedRoute from './pages/auth/ProtectedRoute';
 import './App.css';
 
 function App() {

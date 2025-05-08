@@ -1,8 +1,9 @@
 // context/AuthContext.tsx
-import { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 import { UserType } from '../types/auth';
 import authService from '../services/authService';
 
+// Define the shape of the context
 interface AuthContextType {
   isAuthenticated: boolean;
   user: UserType | null;
@@ -13,7 +14,8 @@ interface AuthContextType {
   error: string | null;
 }
 
-export const AuthContext = createContext<AuthContextType>({
+// Create the context with default values
+const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   user: null,
   login: async () => {},
@@ -27,6 +29,7 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+// Create the provider component
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -94,10 +97,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   );
 };
 
-// hooks/useAuth.ts
-import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-
+// Custom hook to use the auth context
 export const useAuth = () => {
   return useContext(AuthContext);
 };
+
+// Export AuthContext for testing purposes
+export { AuthContext };
