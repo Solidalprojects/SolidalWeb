@@ -1,10 +1,14 @@
 // components/Navbar.tsx
 import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/solidal_logo.png';
+import { useAuth } from '../hooks/useAuth';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const { isAuthenticated, user, logout } = useAuth();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +18,14 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Services', path: '/services' },
+    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'About', path: '/about' },
+    { name: 'Contact', path: '/contact' }
+  ];
   
   return (
     <header className={`fixed w-full z-50 transition-all duration-300 ${
@@ -22,9 +34,9 @@ const Navbar = () => {
         : 'bg-gray-900/80 py-2'
     }`}>
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <div className="w-40">
+        <Link to="/" className="w-40">
           <img src={logo} alt="Solidal Web Development" className="max-h-10" />
-        </div>
+        </Link>
         
         {/* Mobile Menu Button */}
         <button 
@@ -48,18 +60,60 @@ const Navbar = () => {
           mobileMenuOpen ? 'flex' : 'hidden'
         } md:flex fixed md:relative inset-0 md:inset-auto top-16 md:top-0 flex-col md:flex-row items-center justify-center md:justify-end pt-20 md:pt-0 bg-gray-900/95 md:bg-transparent md:backdrop-blur-none backdrop-blur-md md:shadow-none z-40 transition-all duration-300`}>
           <ul className="flex flex-col md:flex-row items-center gap-8 md:gap-6">
-            {['Home', 'Services', 'Portfolio', 'About', 'Contact'].map((item, index) => (
+            {navItems.map((item, index) => (
               <li key={index}>
-                <a 
-                  href={`#${item.toLowerCase()}`} 
-                  className="text-white hover:text-blue-400 text-lg md:text-base font-medium transition-colors duration-300 relative group py-2 px-1 block"
+                <Link 
+                  to={item.path} 
+                  className={`text-white hover:text-blue-400 text-lg md:text-base font-medium transition-colors duration-300 relative group py-2 px-1 block
+                    ${location.pathname === item.path ? 'text-blue-400' : ''}
+                  `}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  {item}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-400 transition-all duration-300 group-hover:w-full"></span>
-                </a>
+                  {item.name}
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-blue-400 transition-all duration-300
+                    ${location.pathname === item.path ? 'w-full' : 'w-0 group-hover:w-full'}
+                  `}></span>
+                </Link>
               </li>
             ))}
+
+            {/* Auth Links */}
+            <li className="md:ml-4">
+              {isAuthenticated ? (
+                <div className="flex items-center gap-4">
+                  <Link 
+                    to="/dashboard"
+                    className="text-white hover:text-blue-400 transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <button 
+                    onClick={logout}
+                    className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg hover:shadow-lg hover:shadow-blue-600/20 transition-all"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <div className="flex flex-col md:flex-row items-center gap-4">
+                  <Link 
+                    to="/login"
+                    className="text-white hover:text-blue-400 transition-colors duration-300"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                  <Link 
+                    to="/signup"
+                    className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg hover:shadow-lg hover:shadow-blue-600/20 transition-all"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
+            </li>
           </ul>
         </nav>
       </div>
