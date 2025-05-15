@@ -1,5 +1,5 @@
 // components/Contact.tsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({

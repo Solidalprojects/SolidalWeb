@@ -3,7 +3,7 @@ import { useState, FormEvent, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import clientAuthService, { supportedClientSites } from '../services/clientAuthService';
 import ClientSiteSelector from '../components/ClientSiteSelector';
-import ClientLoginInfo from '../components/ClientLoginInfo';
+
 
 const ClientLoginPage = () => {
   const [username, setUsername] = useState('');
@@ -54,7 +54,7 @@ const ClientLoginPage = () => {
       // Show what's being submitted (for development only)
       console.log(`Attempting login to ${clientDomain} with username: ${username}`);
       
-      const { token, redirectUrl, user } = await clientAuthService.loginToClientSite({
+      const { redirectUrl } = await clientAuthService.loginToClientSite({
         username,
         password,
         clientDomain
@@ -194,8 +194,6 @@ const ClientLoginPage = () => {
           </button>
         </form>
         
-        {/* Demo credentials info component - only show in development */}
-        {process.env.NODE_ENV !== 'production' && <ClientLoginInfo />}
       </div>
     </div>
   );

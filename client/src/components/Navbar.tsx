@@ -103,26 +103,13 @@ const Navbar = () => {
                     </div>
                   ) : (
                     <div className="flex flex-col md:flex-row items-center gap-4">
-                      <Link 
-                        to="/login"
-                        className="text-white hover:text-blue-400 transition-colors duration-300"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Login
-                      </Link>
-                      <Link 
-                        to="/signup"
-                        className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg hover:shadow-lg hover:shadow-blue-600/20 transition-all"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        Sign Up
-                      </Link>
+
                       <Link 
                         to="/client-login"
                         className="px-4 py-2 border border-blue-400 text-blue-400 rounded-lg hover:bg-blue-400/10 transition-all"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        Client Login
+                        Login
                       </Link>
                     </div>
                   )}

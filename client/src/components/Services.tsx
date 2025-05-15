@@ -8,7 +8,6 @@ const Services = () => {
   useEffect(() => {
     // Set initial animations with staggered timing
     const timer = setTimeout(() => {
-      const indices = [];
       for (let i = 0; i < services.length; i++) {
         setTimeout(() => {
           setActiveIndices(prev => [...prev, i]);
@@ -64,11 +63,7 @@ const Services = () => {
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1 rounded-full bg-blue-600/10 text-blue-400 text-sm font-medium mb-4">
             WHAT WE OFFER
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Our Services</h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            Comprehensive web solutions to grow your business online
-          </p>
+          </span>     
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

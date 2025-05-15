@@ -1,8 +1,7 @@
 // src/services/authService.ts
 import { API_ENDPOINTS, API_URL } from '../config/api';
-import { apiService } from './apiService';
 import tokenService from './tokenService';
-import { UserType, AuthResponse } from '../types/auth';
+import { UserType } from '../types/auth';
 import axios from 'axios';
 
 const authService = {

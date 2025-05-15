@@ -66,8 +66,6 @@ const Portfolio = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <span className="inline-block px-3 py-1 rounded-full bg-blue-600/10 text-blue-400 text-sm font-medium mb-4">OUR WORK</span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Our Portfolio</h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">Explore our recent projects and success stories</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {projects.map((project, index) => (
