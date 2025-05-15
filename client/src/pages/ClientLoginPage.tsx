@@ -66,17 +66,17 @@ const ClientLoginPage = () => {
       console.log(`Login successful, redirecting to: ${redirectUrl}`);
       
       // Check if we need to redirect to an external site or navigate within this app
-      const isSameOrigin = window.location.origin === clientDomain || 
-                         (clientDomain.startsWith('http://127.0.0.1') && window.location.origin.includes('localhost'));
+      // Determine if redirectUrl is a full URL (starts with http or https)
+      const isExternalUrl = redirectUrl.startsWith('http://') || redirectUrl.startsWith('https://');
       
       // Redirect after a short delay
       setTimeout(() => {
-        if (isSameOrigin) {
-          // If same origin, we can use React Router navigation
-          navigate(redirectUrl);
-        } else {
-          // For cross-origin, we need to use full URL redirect
+        if (isExternalUrl) {
+          // For external URLs, use window.location.href
           window.location.href = redirectUrl;
+        } else {
+          // For internal paths, use React Router navigation
+          navigate(redirectUrl);
         }
       }, 1000);
     } catch (err: any) {

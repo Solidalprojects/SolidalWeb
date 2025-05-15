@@ -1,4 +1,3 @@
-
 // src/services/clientAuthService.ts
 import axios from 'axios';
 import tokenService from './tokenService';
@@ -8,6 +7,7 @@ interface ClientSite {
   domain: string;
   logo?: string;
   adminPath?: string; // Added adminPath property to customize redirect path
+  customRedirectUrl?: string; // Add new property for fully custom redirect URLs
 }
 
 interface ClientCredentials {
@@ -28,7 +28,7 @@ export const supportedClientSites: ClientSite[] = [
     name: "TolaTiles",
     domain: "http://127.0.0.1:8000", // For development/testing
     logo: "/client-logos/tolatiles.png",
-    adminPath: "/dashboard" // Custom React dashboard path
+    customRedirectUrl: "http://localhost:3001/auth/dashboard" // Custom fully-qualified URL
   },
   {
     name: "Artisan Crafts Albania",
@@ -76,10 +76,17 @@ const clientAuthService = {
       // Store token using our token service
       tokenService.setToken(token, domain);
       
-      // Get the custom admin path for this client
+      // Determine the redirect URL
+      
+      // If there's a custom redirect URL defined, use that
+      if (clientSite.customRedirectUrl) {
+        return { token, redirectUrl: clientSite.customRedirectUrl, user };
+      }
+      
+      // Otherwise use the admin path logic
       const adminPath = clientSite.adminPath || '/admin/';
       
-      // Construct the admin redirect URL - use custom React admin if available
+      // Construct the admin redirect URL
       // If we're in same-origin scenario, we can use a relative path
       // Otherwise, use the full domain
       const isSameOrigin = window.location.origin === domain || 

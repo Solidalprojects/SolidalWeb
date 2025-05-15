@@ -72,8 +72,6 @@ const Contact = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <span className="inline-block px-3 py-1 rounded-full bg-blue-600/10 text-blue-400 text-sm font-medium mb-4">GET IN TOUCH</span>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Contact Us</h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">Ready to start your project? Get in touch with our team</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="space-y-8">
