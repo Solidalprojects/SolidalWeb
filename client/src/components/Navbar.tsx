@@ -31,7 +31,7 @@ const Navbar = () => {
   return (
     <header className={`fixed w-full z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-blue-900/80 backdrop-blur-md py-3' 
+        ? 'bg-blue-950/80 backdrop-blur-md py-3' // Darker blue when scrolled
         : 'bg-transparent border-b border-white/20 py-4'
     }`}>
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -62,7 +62,7 @@ const Navbar = () => {
         
         {/* Full-screen Menu */}
         <div 
-          className={`fixed inset-0 bg-blue-900/95 backdrop-blur-lg z-40 transition-all duration-500 ${
+          className={`fixed inset-0 bg-blue-950/95 backdrop-blur-lg z-40 transition-all duration-500 ${
             mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
           }`}
         >
@@ -88,7 +88,7 @@ const Navbar = () => {
               {['facebook', 'twitter', 'instagram', 'linkedin'].map((social, index) => (
                 <a 
                   href="#" 
-                  className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-all duration-300"
+                  className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-blue-950 transition-all duration-300"
                   key={index}
                 >
                   <i className={`fab fa-${social} text-xl`}></i>
@@ -107,7 +107,7 @@ const Navbar = () => {
                   >
                     <span className="mr-2">Dashboard</span>
                     {user && (
-                      <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-semibold">
+                      <div className="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center text-white text-sm font-semibold">
                         {user.first_name ? user.first_name.charAt(0) : user.email.charAt(0)}
                       </div>
                     )}
@@ -117,7 +117,7 @@ const Navbar = () => {
                       logout();
                       setMobileMenuOpen(false);
                     }}
-                    className="px-4 py-2 bg-white text-blue-900 rounded-lg hover:bg-blue-100 transition-all"
+                    className="px-4 py-2 bg-white text-blue-950 rounded-lg hover:bg-blue-100 transition-all"
                   >
                     Logout
                   </button>
@@ -125,7 +125,7 @@ const Navbar = () => {
               ) : (
                 <Link 
                   to="/client-login"
-                  className="px-6 py-3 bg-white text-blue-900 rounded-lg font-medium hover:bg-blue-100 transition-all"
+                  className="px-6 py-3 bg-white text-blue-950 rounded-lg font-medium hover:bg-blue-100 transition-all"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Client Login
