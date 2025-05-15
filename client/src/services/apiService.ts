@@ -1,21 +1,31 @@
-// client/src/services/apiService.ts
+// src/services/apiService.ts
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { API_URL } from '../config/api';
 import { ApiResponse, ApiError } from '../types/api';
+import tokenService from './tokenService';
 
 const apiClient = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Important for cross-domain cookie handling
 });
 
 // Add a request interceptor to include auth token
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    // Get domain from current host or use local domain for testing
+    const currentDomain = window.location.origin.includes('localhost') || 
+                           window.location.origin.includes('127.0.0.1')
+      ? 'http://127.0.0.1:8000' // Local development server
+      : window.location.origin;
+      
+    // Get token based on the current domain
+    const token = tokenService.getToken(currentDomain) || tokenService.getToken();
+    
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Token ${token}`;
     }
     return config;
   },
@@ -29,8 +39,21 @@ apiClient.interceptors.response.use(
     // Handle 401 Unauthorized errors (token expired)
     if (error.response?.status === 401) {
       // Clear local storage and redirect to login
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+      const currentDomain = window.location.origin.includes('localhost') || 
+                            window.location.origin.includes('127.0.0.1')
+        ? 'http://127.0.0.1:8000' // Local development server
+        : window.location.origin;
+      
+      tokenService.removeToken(currentDomain);
+      tokenService.removeToken(); // Also remove main token
+      
+      // Determine which login page to redirect to
+      const isClientSite = tokenService.getLastClientDomain() === currentDomain;
+      if (isClientSite) {
+        window.location.href = '/client-login';
+      } else {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
@@ -84,4 +107,20 @@ export const apiService = {
       throw { status: 500, message: 'Unknown error occurred' };
     }
   },
+  
+  // Special method for calling APIs on a client domain
+  createClientApiInstance(domain: string) {
+    const clientApiClient = axios.create({
+      baseURL: domain.startsWith('http://') ? domain : `https://${domain}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    });
+    
+    // Set up auth interceptor for this client
+    tokenService.setupAuthInterceptor(clientApiClient, domain);
+    
+    return clientApiClient;
+  }
 };

@@ -1,6 +1,7 @@
-// client/src/services/authService.ts
+// src/services/authService.ts
 import { API_ENDPOINTS, API_URL } from '../config/api';
 import { apiService } from './apiService';
+import tokenService from './tokenService';
 import { UserType, AuthResponse } from '../types/auth';
 import axios from 'axios';
 
@@ -9,7 +10,10 @@ const authService = {
     try {
       const response = await axios.post(`${API_URL}${API_ENDPOINTS.AUTH.LOGIN}`, { email, password });
       const authData = response.data;
-      localStorage.setItem('token', authData.token);
+      
+      // Store token for main app
+      tokenService.setToken(authData.token);
+      
       return authData.user;
     } catch (error) {
       console.error('Login error:', error);
@@ -39,7 +43,10 @@ const authService = {
       });
       
       const authData = response.data;
-      localStorage.setItem('token', authData.token);
+      
+      // Store token for main app
+      tokenService.setToken(authData.token);
+      
       return authData.user;
     } catch (error) {
       console.error('Signup error:', error);
@@ -52,34 +59,54 @@ const authService = {
       await axios.post(
         `${API_URL}${API_ENDPOINTS.AUTH.LOGOUT}`,
         {},
-        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+        { headers: { Authorization: `Bearer ${tokenService.getToken()}` } }
       );
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
-      localStorage.removeItem('token');
+      // Remove main app token
+      tokenService.removeToken();
+      
+      // Also remove token for current domain if we're on a client site
+      const currentDomain = window.location.origin.includes('localhost') || 
+                           window.location.origin.includes('127.0.0.1')
+        ? 'http://127.0.0.1:8000' // Local development server
+        : window.location.origin;
+      
+      tokenService.removeToken(currentDomain);
     }
   },
 
   async getCurrentUser(): Promise<UserType | null> {
-    const token = localStorage.getItem('token');
+    const token = tokenService.getToken();
     if (!token) return null;
     
     try {
       const response = await axios.get(
         `${API_URL}${API_ENDPOINTS.AUTH.CURRENT_USER}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Token ${token}` } }
       );
       return response.data;
     } catch (error) {
       console.error('Get current user error:', error);
-      localStorage.removeItem('token');
+      tokenService.removeToken();
       return null;
     }
   },
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+    // Check for either main token or client site token
+    const mainToken = tokenService.getToken();
+    
+    // Also check for client site token if we're on a client site
+    const currentDomain = window.location.origin.includes('localhost') || 
+                         window.location.origin.includes('127.0.0.1')
+      ? 'http://127.0.0.1:8000' // Local development server
+      : window.location.origin;
+    
+    const clientToken = tokenService.getToken(currentDomain);
+    
+    return !!(mainToken || clientToken);
   },
 };
 

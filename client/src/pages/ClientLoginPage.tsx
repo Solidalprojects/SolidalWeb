@@ -3,6 +3,7 @@ import { useState, FormEvent, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import clientAuthService, { supportedClientSites } from '../services/clientAuthService';
 import ClientSiteSelector from '../components/ClientSiteSelector';
+import ClientLoginInfo from '../components/ClientLoginInfo';
 
 const ClientLoginPage = () => {
   const [username, setUsername] = useState('');
@@ -19,11 +20,16 @@ const ClientLoginPage = () => {
     const searchParams = new URLSearchParams(location.search);
     const domainParam = searchParams.get('domain');
     
+    // Set domain from URL param, or last used domain, or default to first one
     if (domainParam && supportedClientSites.some(site => site.domain === domainParam)) {
       setClientDomain(domainParam);
-    } else if (supportedClientSites.length > 0) {
-      // If no valid domain in URL, set first client site as default
-      setClientDomain(supportedClientSites[0].domain);
+    } else {
+      const lastUsedDomain = clientAuthService.getLastClientDomain();
+      if (lastUsedDomain && supportedClientSites.some(site => site.domain === lastUsedDomain)) {
+        setClientDomain(lastUsedDomain);
+      } else if (supportedClientSites.length > 0) {
+        setClientDomain(supportedClientSites[0].domain);
+      }
     }
     
     // If we have state with username from a previous redirect, use it
@@ -48,7 +54,7 @@ const ClientLoginPage = () => {
       // Show what's being submitted (for development only)
       console.log(`Attempting login to ${clientDomain} with username: ${username}`);
       
-      const { token, redirectUrl } = await clientAuthService.loginToClientSite({
+      const { token, redirectUrl, user } = await clientAuthService.loginToClientSite({
         username,
         password,
         clientDomain
@@ -59,9 +65,19 @@ const ClientLoginPage = () => {
       
       console.log(`Login successful, redirecting to: ${redirectUrl}`);
       
+      // Check if we need to redirect to an external site or navigate within this app
+      const isSameOrigin = window.location.origin === clientDomain || 
+                         (clientDomain.startsWith('http://127.0.0.1') && window.location.origin.includes('localhost'));
+      
       // Redirect after a short delay
       setTimeout(() => {
-        window.location.href = redirectUrl;
+        if (isSameOrigin) {
+          // If same origin, we can use React Router navigation
+          navigate(redirectUrl);
+        } else {
+          // For cross-origin, we need to use full URL redirect
+          window.location.href = redirectUrl;
+        }
       }, 1000);
     } catch (err: any) {
       console.error('Login error:', err);
@@ -83,15 +99,15 @@ const ClientLoginPage = () => {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">Login Successful!</h3>
-              <p className="text-gray-300">Redirecting to your admin panel...</p>
+              <p className="text-gray-300">Redirecting to your dashboard...</p>
             </div>
           </div>
         )}
         
         <div className="text-center">
-          <h2 className="mt-6 text-3xl font-bold text-white">Client Admin Login</h2>
+          <h2 className="mt-6 text-3xl font-bold text-white">Client Dashboard Login</h2>
           <p className="mt-2 text-sm text-gray-300">
-            Log in to access your website's admin panel
+            Log in to access your website's dashboard
           </p>
         </div>
         
@@ -173,10 +189,13 @@ const ClientLoginPage = () => {
                 Processing...
               </span>
             ) : (
-              'Log in to Admin'
+              'Log in to Dashboard'
             )}
           </button>
         </form>
+        
+        {/* Demo credentials info component - only show in development */}
+        {process.env.NODE_ENV !== 'production' && <ClientLoginInfo />}
       </div>
     </div>
   );

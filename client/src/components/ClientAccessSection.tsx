@@ -1,4 +1,4 @@
-// src/components/ClientAccessSection.tsx (continued)
+// src/components/ClientAccessSection.tsx
 import { Link } from 'react-router-dom';
 import { supportedClientSites } from '../services/clientAuthService';
 
@@ -9,7 +9,7 @@ const ClientAccessSection = () => {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-white mb-4">Client Access</h2>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-            Quick access to your website's admin panel
+            Quick access to your website's dashboard panel
           </p>
         </div>
         
@@ -18,7 +18,7 @@ const ClientAccessSection = () => {
             {supportedClientSites.map((site) => (
               <Link 
                 key={site.domain}
-                to="/client-login"
+                to={`/client-login?domain=${encodeURIComponent(site.domain)}`}
                 className="bg-gray-800 hover:bg-gray-750 rounded-lg p-6 text-center transition-all transform hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="flex flex-col items-center justify-center h-full">
@@ -30,7 +30,7 @@ const ClientAccessSection = () => {
                     </div>
                   )}
                   <h3 className="text-lg font-semibold text-white mb-2">{site.name}</h3>
-                  <p className="text-gray-400 text-sm">{site.domain}</p>
+                  <p className="text-gray-400 text-sm">{site.domain.startsWith('http://') ? 'Development Server' : site.domain}</p>
                 </div>
               </Link>
             ))}
@@ -41,7 +41,7 @@ const ClientAccessSection = () => {
               to="/client-login" 
               className="inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
-              Log in to your admin panel
+              Log in to your dashboard
             </Link>
           </div>
         </div>
