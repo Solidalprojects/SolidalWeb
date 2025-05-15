@@ -35,7 +35,9 @@ const ClientSiteSelector = ({ selectedDomain, onSelect }: ClientSiteSelectorProp
               </div>
             )}
             <span className="text-sm text-white font-medium">{site.name}</span>
-            <span className="text-xs text-gray-400">{site.domain}</span>
+            <span className="text-xs text-gray-400">
+              {site.domain.startsWith('http://127.0.0.1') ? 'Development Server' : site.domain}
+            </span>
           </div>
         ))}
       </div>

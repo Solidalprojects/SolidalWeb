@@ -3,10 +3,9 @@ import { useState, FormEvent, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import clientAuthService, { supportedClientSites } from '../services/clientAuthService';
 import ClientSiteSelector from '../components/ClientSiteSelector';
-import ClientLoginInfo from '../components/ClientLoginInfo';
 
 const ClientLoginPage = () => {
-  const [username, setUsername] = useState(''); // Changed from email to username
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [clientDomain, setClientDomain] = useState('');
   const [loading, setLoading] = useState(false);
@@ -34,30 +33,6 @@ const ClientLoginPage = () => {
     }
   }, [location]);
 
-  // Function to auto-fill demo credentials
-  const autofillDemoCredentials = () => {
-    const testCredentials = {
-      'tolatiles.al': {
-        username: 'admin', // Changed from email to username
-        password: 'password123'
-      },
-      'artisancrafts.al': {
-        username: 'artisanadmin', // Changed from email to username
-        password: 'crafts123'
-      },
-      'tiranafinancial.al': {
-        username: 'financeadmin', // Changed from email to username
-        password: 'finance123'
-      }
-    };
-    
-    const credentials = testCredentials[clientDomain as keyof typeof testCredentials];
-    if (credentials) {
-      setUsername(credentials.username);
-      setPassword(credentials.password);
-    }
-  };
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -70,8 +45,11 @@ const ClientLoginPage = () => {
     }
 
     try {
+      // Show what's being submitted (for development only)
+      console.log(`Attempting login to ${clientDomain} with username: ${username}`);
+      
       const { token, redirectUrl } = await clientAuthService.loginToClientSite({
-        username, // Changed from email to username
+        username,
         password,
         clientDomain
       });
@@ -79,13 +57,15 @@ const ClientLoginPage = () => {
       // Show success animation before redirecting
       setLoginSuccess(true);
       
+      console.log(`Login successful, redirecting to: ${redirectUrl}`);
+      
       // Redirect after a short delay
       setTimeout(() => {
         window.location.href = redirectUrl;
       }, 1000);
     } catch (err: any) {
       console.error('Login error:', err);
-      setError(err?.response?.data?.message || 'Login failed. Please check your credentials.');
+      setError(err?.response?.data?.error || err?.response?.data?.message || 'Login failed. Please check your credentials and try again.');
       setLoading(false);
     }
   };
@@ -114,20 +94,6 @@ const ClientLoginPage = () => {
             Log in to access your website's admin panel
           </p>
         </div>
-        
-        {/* Show credentials info in development mode */}
-        {import.meta.env.DEV && (
-          <>
-            <ClientLoginInfo />
-            <button
-              type="button"
-              onClick={autofillDemoCredentials}
-              className="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
-            >
-              Auto-fill Demo Credentials
-            </button>
-          </>
-        )}
         
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (

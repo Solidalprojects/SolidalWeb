@@ -1,4 +1,5 @@
-// Update to src/services/clientAuthService.ts
+
+// src/services/clientAuthService.ts
 import axios from 'axios';
 
 interface ClientSite {
@@ -8,7 +9,7 @@ interface ClientSite {
 }
 
 interface ClientCredentials {
-  username: string; // Changed from email to username
+  username: string;
   password: string;
   clientDomain: string;
 }
@@ -18,12 +19,12 @@ interface ClientAuthResponse {
   redirectUrl: string;
 }
 
-// List of supported client websites
+// List of supported client websites with their domains
 export const supportedClientSites: ClientSite[] = [
   {
     name: "TolaTiles",
-    domain: "http://127.0.0.1:8000/",
-    logo: "/client-logos/tolatiles.png" // You'll need to add these logo files to your assets
+    domain: "http://127.0.0.1:8000", // For development/testing
+    logo: "/client-logos/tolatiles.png"
   },
   {
     name: "Artisan Crafts Albania",
@@ -35,21 +36,35 @@ export const supportedClientSites: ClientSite[] = [
     domain: "tiranafinancial.al",
     logo: "/client-logos/tiranafinancial.png"
   }
-  // Add more client sites as needed
 ];
 
 const clientAuthService = {
   async loginToClientSite({ username, password, clientDomain }: ClientCredentials): Promise<ClientAuthResponse> {
     try {
-      // Make authentication request to the client's website API with username instead of email
+      // Get the domain without the protocol for constructing the API endpoint
+      const domain = clientDomain;
+      
+      // Determine the proper API endpoint based on the domain
+      // This handles both the localhost testing case and production domains
+      const loginEndpoint = domain.startsWith('http://') 
+        ? `${domain}/api/auth/login/` 
+        : `https://${domain}/api/auth/login/`;
+        
+      console.log(`Attempting to login to: ${loginEndpoint}`);
+      
+      // Make authentication request to the client's website API
       const response = await axios.post(
-        `https://${clientDomain}/api/auth/login/`, 
-        { username, password } // Changed from email to username
+        loginEndpoint, 
+        { username, password }
       );
       
-      // Extract token and construct redirect URL
+      // Extract token from response
       const { token } = response.data;
-      const redirectUrl = `https://${clientDomain}/admin`;
+      
+      // Construct the admin redirect URL
+      const redirectUrl = domain.startsWith('http://')
+        ? `${domain}/admin/`
+        : `https://${domain}/admin/`;
       
       return { token, redirectUrl };
     } catch (error) {
