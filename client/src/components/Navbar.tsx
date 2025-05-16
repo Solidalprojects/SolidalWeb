@@ -1,13 +1,12 @@
 // src/components/Navbar.tsx
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import logo from '../assets/solidal_logo.png';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const location = useLocation();
   const { isAuthenticated, user, logout } = useAuth();
   
   useEffect(() => {

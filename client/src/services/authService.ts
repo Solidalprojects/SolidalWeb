@@ -28,7 +28,7 @@ const authService = {
       
       if (name.includes(' ')) {
         const nameParts = name.split(' ');
-        first_name = nameParts[0];
+        first_name = nameParts[0] ?? '';
         last_name = nameParts.slice(1).join(' ');
       }
       

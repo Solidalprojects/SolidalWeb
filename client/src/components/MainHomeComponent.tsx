@@ -1,14 +1,13 @@
 // src/components/MainHomeComponent.tsx
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import logoWhite from '../assets/navlogo.svg';
 
 // Import video file
 import backgroundVideo from '../assets/background-video.mp4'; 
 
 const MainHomeComponent = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [, setIsScrolled] = useState(false);
+  const [] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,9 +19,6 @@ const MainHomeComponent = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   return (
     <div className="relative h-[90vh] overflow-hidden">

@@ -28,7 +28,7 @@ const ClientLoginPage = () => {
       if (lastUsedDomain && supportedClientSites.some(site => site.domain === lastUsedDomain)) {
         setClientDomain(lastUsedDomain);
       } else if (supportedClientSites.length > 0) {
-        setClientDomain(supportedClientSites[0].domain);
+        setClientDomain(supportedClientSites[0]?.domain ?? '');
       }
     }
     

@@ -1,4 +1,4 @@
-/* src/styles/MainHome.css */
+/* src/styles/MainHome.css - COMPLETE VERSION */
 
 /* Client Logo Slider Animation */
 @keyframes marquee {
@@ -105,6 +105,181 @@
   }
 }
 
+/* Process Timeline Animation: Spinning Circle */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 15s linear infinite;
+}
+
+/* Process Timeline Animation: Highlight Circle */
+@keyframes highlight-circle {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.highlight-circle {
+  animation: highlight-circle 2s ease-in-out;
+}
+
+/* Process Timeline Animation: Section Fade In */
+@keyframes section-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-section-fade-in {
+  animation: section-fade-in 1s ease-out forwards;
+}
+
+/* Process Timeline Animation: Growing Line */
+@keyframes line-grow {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+.animate-line-grow {
+  animation: line-grow 2s ease-out forwards;
+}
+
+/* Process Timeline Animation: Step Pop In */
+@keyframes step-pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-step-pop-in {
+  animation: step-pop-in 0.6s ease-out forwards;
+}
+
+/* Shine Effect for Process Icons */
+@keyframes shine {
+  0% {
+    background-position: -100px;
+  }
+  40%, 100% {
+    background-position: 300px;
+  }
+}
+
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 20%;
+  height: 200%;
+  opacity: 0;
+  transform: rotate(30deg);
+  background: rgba(255, 255, 255, 0.13);
+  background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0.13) 0%,
+    rgba(255, 255, 255, 0.13) 77%,
+    rgba(255, 255, 255, 0.5) 92%,
+    rgba(255, 255, 255, 0.0) 100%
+  );
+}
+
+.shine-effect:hover::after {
+  opacity: 1;
+  animation: shine 1.5s ease-in-out;
+}
+
+/* Pulsating Border Animation */
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.pulse-border {
+  animation: pulse-border 2s infinite;
+}
+
+/* Icon Grow Animation */
+@keyframes icon-grow {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-icon-grow {
+  animation: icon-grow 0.5s ease-out forwards;
+}
+
+/* Active Timeline Element Animation */
+@keyframes active-step {
+  0% {
+    background-color: rgba(30, 64, 175, 0.3);
+  }
+  50% {
+    background-color: rgba(37, 99, 235, 0.7);
+  }
+  100% {
+    background-color: rgba(30, 64, 175, 0.3);
+  }
+}
+
+.active-step {
+  animation: active-step 3s ease-in-out infinite;
+}
+
+/* Timeline animations */
 .animate-timeline {
   animation: drawLine 2s ease-out forwards;
 }
@@ -133,3 +308,52 @@
 .animate-glow {
   animation: glow 5s ease-in-out infinite;
 }
+
+/* Dash Circle Animation */
+@keyframes dash-rotate {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+.animate-dash {
+  stroke-dasharray: 10 5;
+  animation: dash-rotate 20s linear infinite;
+}
+
+/* Text Reveal Animation */
+@keyframes text-reveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.text-reveal {
+  animation: text-reveal 1s ease-out forwards;
+}
+
+/* Subtle background movement */
+@keyframes wave-bg {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.wave-bg {
+  background-size: 200% 200%;
+  animation: wave-bg 15s ease infinite;
+}
+
+/* Staggered fade in for multiple elements */
+.stagger-fade > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-fade > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-fade > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-fade > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-fade > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-fade > *:nth-child(6) { animation-delay: 0.6s; }
