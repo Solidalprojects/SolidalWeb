@@ -84,6 +84,35 @@
   }
 }
 
+/* Line draw animation for the process steps */
+@keyframes drawLine {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-timeline {
+  animation: drawLine 2s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
 .animate-pulse-slow {
   animation: pulse-slow 6s ease-in-out infinite;
 }

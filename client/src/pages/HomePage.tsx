@@ -2,7 +2,7 @@
 import MainHomeComponent from '../components/MainHomeComponent';
 import ClientLogoSlider from '../components/ClientLogoSlider';
 import WhyFamousSection from '../components/WhyFamousSection';
-import Services from '../components/Services';
+import WebsiteDesignProject from '../components/WebsiteDesignProject';
 import Portfolio from '../components/Portofolio';
 import About from '../components/About';
 import Testimonials from '../components/Testimonials';
@@ -18,7 +18,7 @@ const HomePage = () => {
         <ClientLogoSlider />
       </div>
       <WhyFamousSection />
-      <Services />
+      <WebsiteDesignProject />
       <Portfolio />
       <About />
       <ClientAccessSection />

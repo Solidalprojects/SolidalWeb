@@ -1,6 +1,7 @@
+
 // pages/ServicesPage.tsx
 import { useEffect } from 'react';
-import Services from '../components/Services';
+import WebsiteDesignProject from '../components/WebsiteDesignProject';
 
 const ServicesPage = () => {
   useEffect(() => {
@@ -8,20 +9,20 @@ const ServicesPage = () => {
     window.scrollTo(0, 0);
     
     // Update page title
-    document.title = 'Services | Solidal Web Development';
+    document.title = 'Our Process | Solidal Web Development';
   }, []);
   
   return (
     <main>
       <div className="pt-20 bg-gray-900">
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-4xl font-bold text-white text-center">Our Services</h1>
+          <h1 className="text-4xl font-bold text-white text-center">Our Website Design Process</h1>
           <p className="text-gray-300 text-center max-w-2xl mx-auto mt-4">
-            Comprehensive web solutions to help your business thrive online
+            Explore our comprehensive approach to creating exceptional websites
           </p>
         </div>
       </div>
-      <Services />
+      <WebsiteDesignProject />
     </main>
   );
 };
