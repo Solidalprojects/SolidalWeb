@@ -10,8 +10,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
+    "noEmit": true,  /* Keep noEmit true here */
 
     /* Type Checking - IMPORTANT SETTINGS FOR SHOWING ERRORS */
     "strict": true,
