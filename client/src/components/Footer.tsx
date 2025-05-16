@@ -1,5 +1,5 @@
 // components/Footer.tsx
-import logo from '../assets/navlogo.svg'
+import logo from '../assets/solidal_logo.png'
 
 const Footer = () => {
   return (

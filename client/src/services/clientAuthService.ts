@@ -1,7 +1,7 @@
 // src/services/clientAuthService.ts
 import axios from 'axios';
 import tokenService from './tokenService';
-
+import tolatiles from '../assets/tolatiles.svg'
 interface ClientSite {
   name: string;
   domain: string;
@@ -27,21 +27,9 @@ export const supportedClientSites: ClientSite[] = [
   {
     name: "TolaTiles",
     domain: "http://127.0.0.1:8000", // For development/testing
-    logo: "/client-logos/tolatiles.png",
+    logo: tolatiles,
     customRedirectUrl: "http://localhost:3001/auth/dashboard" // Custom fully-qualified URL
   },
-  {
-    name: "Artisan Crafts Albania",
-    domain: "artisancrafts.al",
-    logo: "/client-logos/artisancrafts.png",
-    adminPath: "/dashboard" // Custom React dashboard path
-  },
-  {
-    name: "Tirana Financial Group",
-    domain: "tiranafinancial.al",
-    logo: "/client-logos/tiranafinancial.png",
-    adminPath: "/dashboard" // Custom React dashboard path
-  }
 ];
 
 const clientAuthService = {
