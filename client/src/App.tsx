@@ -4,7 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
-import PortfolioPage from './pages/PortofolioPage';
+import PortfolioPage from './pages/PortfolioPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import ClientLoginPage from './pages/ClientLoginPage';

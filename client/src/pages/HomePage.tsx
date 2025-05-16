@@ -3,11 +3,8 @@ import MainHomeComponent from '../components/MainHomeComponent';
 import ClientLogoSlider from '../components/ClientLogoSlider';
 import WhyFamousSection from '../components/WhyFamousSection';
 import WebsiteDesignProject from '../components/WebsiteDesignProject';
-import Portfolio from '../components/Portofolio';
-import About from '../components/About';
-import Testimonials from '../components/Testimonials';
+import Portfolio from '../components/Portfolio';
 import Contact from '../components/Contacts';
-import ClientAccessSection from '../components/ClientAccessSection';
 import '../styles/MainHome.css';
 
 const HomePage = () => {
@@ -20,9 +17,6 @@ const HomePage = () => {
       <WhyFamousSection />
       <WebsiteDesignProject />
       <Portfolio />
-      <About />
-      <ClientAccessSection />
-      <Testimonials />
       <Contact />
     </main>
   );

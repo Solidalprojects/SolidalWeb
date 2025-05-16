@@ -2,11 +2,11 @@
 import { useRef, useEffect } from 'react';
 
 // Import client logos (replace with your actual client logos)
-import clientLogo1 from '../assets/corporate.png';
-import clientLogo2 from '../assets/ecommerce.png';
-import clientLogo3 from '../assets/heroimage.png';
-import clientLogo4 from '../assets/restaurant.png';
-import clientLogo5 from '../assets/tourism.png';
+import clientLogo1 from '../assets/tolatiles.svg';
+import clientLogo2 from '../assets/fishinghub.svg';
+import clientLogo3 from '../assets/solidal_logo.png';
+import clientLogo4 from '../assets/tolatiles.svg';
+import clientLogo5 from '../assets/fishinghub.svg';
 import clientLogo6 from '../assets/solidal_logo.png';
 
 interface ClientLogo {

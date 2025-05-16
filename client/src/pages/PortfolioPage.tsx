@@ -1,6 +1,6 @@
 // pages/PortfolioPage.tsx
 import { useEffect } from 'react';
-import Portfolio from '../components/Portofolio';
+import Portfolio from '../components/Portfolio';
 
 const PortfolioPage = () => {
   useEffect(() => {
