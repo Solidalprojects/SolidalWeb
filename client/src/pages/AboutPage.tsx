@@ -1,7 +1,8 @@
 // pages/AboutPage.tsx
 import { useEffect } from 'react';
-import About from '../components/About';
+import ImprovedAbout from '../components/About';
 import Testimonials from '../components/Testimonials';
+import ClientLogoSlider from '../components/ClientLogoSlider';
 
 const AboutPage = () => {
   useEffect(() => {
@@ -9,20 +10,51 @@ const AboutPage = () => {
     window.scrollTo(0, 0);
     
     // Update page title
-    document.title = 'About Us | Solidal Web Development';
+    document.title = 'Our Story | Solidal Web Development';
   }, []);
   
   return (
     <main>
-      <div className="pt-20 bg-gray-900">
-        <div className="container mx-auto px-4 py-12">
-          <h1 className="text-4xl font-bold text-white text-center">About Us</h1>
-          <p className="text-gray-300 text-center max-w-2xl mx-auto mt-4">
-            Learn more about Solidal Web Development and our team
-          </p>
+      {/* Hero Banner */}
+      <div className="pt-20 bg-gradient-to-b from-gray-900 to-blue-950 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Animated gradient blobs */}
+          <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-blue-600/5 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-indigo-500/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+          
+          {/* Grid pattern */}
+          <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 py-16 relative z-10">
+          <div className="text-center relative">
+            <div className="inline-block mb-4 overflow-hidden">
+              <span className="inline-block px-4 py-1 rounded-full bg-blue-600/20 text-blue-400 text-sm font-medium animate-fadeInUp">
+                OUR STORY
+              </span>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 relative overflow-hidden">
+              <span className="block animate-fadeInUp" style={{ animationDelay: '0.1s' }}>About Solidal</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-500 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
+                Web Development
+              </span>
+            </h1>
+            <div className="overflow-hidden">
+              <p className="text-gray-300 text-xl max-w-2xl mx-auto mt-4 animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
+                Young innovators creating exceptional digital experiences in Albania
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-      <About />
+      
+      {/* Main Content */}
+      <ImprovedAbout />
+      
+
+      
+      {/* Testimonials */}
       <Testimonials />
     </main>
   );

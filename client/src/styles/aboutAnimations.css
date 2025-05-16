@@ -1,0 +1,235 @@
+/* aboutAnimations.css */
+
+/* Hero animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInLeft {
+  animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInRight {
+  animation: fadeInRight 0.8s ease-out forwards;
+}
+
+/* Timeline animations */
+@keyframes drawLine {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+.animate-drawLine {
+  animation: drawLine 2s ease-out forwards;
+}
+
+/* Card hover effects */
+.experience-card {
+  transition: all 0.3s ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1), 0 10px 10px -5px rgba(59, 130, 246, 0.04);
+}
+
+/* Custom glow effects */
+.text-glow {
+  text-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.box-glow {
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.15);
+}
+
+.box-glow:hover {
+  box-shadow: 0 0 35px rgba(59, 130, 246, 0.25);
+}
+
+/* Staggered animations for cards */
+.value-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.value-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.value-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.value-card:nth-child(4) {
+  animation-delay: 0.7s;
+}
+
+/* Pulse animations */
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    border-color: rgba(59, 130, 246, 0.8);
+  }
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s infinite;
+}
+
+/* Background animations */
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-float {
+  animation: floatAnimation 8s ease-in-out infinite;
+}
+
+/* Timeline animations */
+@keyframes expandWidth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-expandWidth {
+  animation: expandWidth 1.5s ease-out forwards;
+}
+
+/* Team member card animations */
+.team-card {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.team-card:hover {
+  transform: translateY(-15px) scale(1.03);
+}
+
+/* Skill tag animations */
+@keyframes tagPop {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.skill-tag {
+  animation: tagPop 0.5s forwards;
+}
+
+.skill-tag:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.skill-tag:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.skill-tag:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.skill-tag:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+/* Scroll progress animations */
+.progress-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(to right, #1e40af, #3b82f6);
+  z-index: 1000;
+  transition: width 0.2s ease-out;
+}
+
+/* Timeline connector animations */
+@keyframes connector {
+  from {
+    height: 0;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+.timeline-connector {
+  animation: connector 2s forwards ease-out;
+}
+
+/* Grid background */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Animated quote */
+@keyframes quoteFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-quote {
+  animation: quoteFloat 5s ease-in-out infinite;
+}
