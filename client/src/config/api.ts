@@ -26,5 +26,6 @@ export const API_ENDPOINTS = {
   },
   ANALYTICS: {
     DATA: '/analytics/data/',
+    
   },
 };
