@@ -1,4 +1,4 @@
-// src/components/WebsiteDesignProject.tsx - Enhanced Animation Version
+// src/components/WebsiteDesignProject.tsx - With More Responsive Clock Animations
 import { useState, useEffect, useRef } from 'react';
 
 interface DesignStep {
@@ -10,6 +10,7 @@ interface DesignStep {
 
 const WebsiteDesignProject = () => {
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [visibleSteps, setVisibleSteps] = useState<boolean[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
   
@@ -58,7 +59,7 @@ const WebsiteDesignProject = () => {
     setVisibleSteps(Array(designSteps.length).fill(false));
   }, [designSteps.length]);
 
-  // Enhanced scroll-based animation with earlier fade and pop effect
+  // More sensitive scroll-based animation with precise progress tracking
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
@@ -74,19 +75,22 @@ const WebsiteDesignProject = () => {
       }
       
       // Calculate how far we've scrolled through the section (0 to 1)
-      // Adjusted to start earlier - when the section first enters viewport
-      const scrollProgress = Math.min(
+      // More sensitive calculation that starts earlier and finishes later
+      const progress = Math.min(
         Math.max(
-          (windowHeight - sectionTop) / (sectionHeight + windowHeight * 0.5),
+          (windowHeight - sectionTop) / (sectionHeight + windowHeight * 0.7),
           0
         ),
         1
       );
       
-      // Map scroll progress to step index with earlier activation
-      // Increase the multiplier to activate steps earlier
+      // Store the raw scroll progress for precise animations
+      setScrollProgress(progress);
+      
+      // Determine active step based on progress
+      // More sensitive thresholds for earlier activation
       const newIndex = Math.min(
-        Math.floor(scrollProgress * (designSteps.length + 1.5)),
+        Math.floor(progress * (designSteps.length + 1.8)), // More sensitive multiplier
         designSteps.length - 1
       );
       
@@ -94,14 +98,13 @@ const WebsiteDesignProject = () => {
         setActiveIndex(newIndex);
       }
       
-      // Update visibility for each step independently for more granular control
-      // This allows elements to start fading in earlier than becoming fully active
+      // Update visibility with more granular thresholds
       setVisibleSteps(prev => {
         const newVisible = [...prev];
         designSteps.forEach((_, idx) => {
-          // Calculate visibility threshold for this step - earlier than activation
-          const stepThreshold = idx / (designSteps.length + 3);
-          newVisible[idx] = scrollProgress > stepThreshold;
+          // Lower threshold for earlier visibility
+          const stepThreshold = idx / (designSteps.length + 4); // More sensitive
+          newVisible[idx] = progress > stepThreshold;
         });
         return newVisible;
       });
@@ -113,6 +116,54 @@ const WebsiteDesignProject = () => {
     
     return () => window.removeEventListener('scroll', handleScroll);
   }, [activeIndex, designSteps.length]);
+
+  // Helper function to create the clock-like SVG border
+  const ClockBorder = ({ position, isActive }: { position: number, isActive: boolean }) => {
+    // Calculate progress for this step (position from 0 to 1)
+    const clockProgress = position / designSteps.length;
+    
+    return (
+      <svg className="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100">
+        {/* Full circle border - dim */}
+        <circle 
+          cx="50" 
+          cy="50" 
+          r="48" 
+          fill="none" 
+          stroke="rgba(59, 130, 246, 0.2)" 
+          strokeWidth="2" 
+        />
+        
+        {/* Clock-like arc that shows progress - bright */}
+        <circle 
+          cx="50" 
+          cy="50" 
+          r="48" 
+          fill="none" 
+          stroke="rgba(59, 130, 246, 0.8)" 
+          strokeWidth="3"
+          strokeDasharray={`${Math.min(301, 301 * clockProgress)} 301`}
+          strokeDashoffset="0"
+          transform="rotate(-90 50 50)"
+          className="transition-all duration-500"
+          strokeLinecap="round"
+        />
+        
+        {/* Animated dot that travels along the arc */}
+        <circle 
+          cx="50"
+          cy="2" 
+          r="4"
+          fill="white"
+          className="animate-dot-move"
+          transform={`rotate(${isActive ? 360 * clockProgress : 0} 50 50)`}
+          style={{
+            filter: "drop-shadow(0 0 3px rgba(59, 130, 246, 0.8))"
+          }}
+        />
+      </svg>
+    );
+  };
 
   return (
     <section 
@@ -148,9 +199,9 @@ const WebsiteDesignProject = () => {
           
           {/* Active timeline - The glowing vertical line that grows */}
           <div 
-            className="absolute left-1/2 transform -translate-x-1/2 top-0 w-1 bg-blue-500 hidden md:block transition-all duration-700 ease-in-out"
+            className="absolute left-1/2 transform -translate-x-1/2 top-0 w-1 bg-blue-500 hidden md:block transition-all duration-300 ease-in-out"
             style={{ 
-              height: `${Math.min(100, (activeIndex + 1) / designSteps.length * 100)}%`,
+              height: `${Math.min(100, scrollProgress * 100 * 1.1)}%`, // Direct use of scrollProgress for more sensitivity
               boxShadow: '0 0 10px rgba(59, 130, 246, 0.6)',
               opacity: activeIndex >= 0 ? 1 : 0
             }}
@@ -178,80 +229,94 @@ const WebsiteDesignProject = () => {
                   {step.number}
                 </div>
                 
-                {/* Center circle connector with icon */}
+                {/* Center circle connector with icon and clock border */}
                 <div 
                   className={`absolute left-1/2 transform -translate-x-1/2 w-16 h-16 rounded-full 
-                    border-4 z-10 flex items-center justify-center text-2xl md:flex
-                    transition-all duration-700 ${
+                    border-4 z-10 flex items-center justify-center text-2xl hidden md:flex
+                    transition-all duration-500 ${
                       isActive 
                         ? 'border-blue-400 bg-blue-700 text-white scale-110' 
                         : 'border-blue-800/30 bg-blue-900/30 text-gray-400 scale-100'
                     }`}
                   style={{
-                    boxShadow: isActive ? '0 0 20px rgba(59, 130, 246, 0.6)' : 'none'
+                    boxShadow: isActive ? '0 0 15px rgba(59, 130, 246, 0.6)' : 'none'
                   }}
                 >
                   {step.icon}
                   
-                  {/* The rotating circle around the step icon */}
-                  {isActive && (
-                    <svg className="absolute top-0 left-0 w-full h-full animate-spin-slow" viewBox="0 0 100 100">
-                      <circle 
-                        cx="50" 
-                        cy="50" 
-                        r="48" 
-                        fill="none" 
-                        stroke="rgba(59, 130, 246, 0.5)" 
-                        strokeWidth="2" 
-                        strokeDasharray="10,5" 
-                      />
-                    </svg>
-                  )}
+                  {/* Clock-like border for icon */}
+                  {isActive && <ClockBorder position={index + 1} isActive={isActive} />}
                 </div>
                 
                 {/* Content - alternating sides */}
                 <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:text-right md:pr-16' : 'md:text-left md:pl-16'}`}>
+                  {/* Mobile icon with clock border */}
                   <div 
                     className={`mb-4 md:hidden flex items-center justify-center w-16 h-16 mx-auto rounded-full border-4 text-2xl
-                      transition-all duration-700 ${
+                      transition-all duration-500 ${
                         isActive 
                           ? 'border-blue-400 bg-blue-700 text-white scale-110' 
                           : 'border-blue-800/30 bg-blue-900/30 text-gray-400 scale-100'
                       }`}
                     style={{
-                      boxShadow: isActive ? '0 0 20px rgba(59, 130, 246, 0.6)' : 'none'
+                      boxShadow: isActive ? '0 0 15px rgba(59, 130, 246, 0.6)' : 'none'
                     }}
                   >
                     {step.icon}
                     
-                    {/* Add the rotating circle for mobile view too */}
-                    {isActive && (
-                      <svg className="absolute w-16 h-16 animate-spin-slow" viewBox="0 0 100 100">
-                        <circle 
-                          cx="50" 
-                          cy="50" 
-                          r="48" 
-                          fill="none" 
-                          stroke="rgba(59, 130, 246, 0.5)" 
-                          strokeWidth="2" 
-                          strokeDasharray="10,5" 
-                        />
-                      </svg>
-                    )}
+                    {/* Clock border for mobile icon */}
+                    {isActive && <ClockBorder position={index + 1} isActive={isActive} />}
+                  </div>
+                  
+                  {/* Step number with clock border */}
+                  <div className="hidden md:flex mb-4 items-center justify-center">
+                    <div 
+                      className={`relative flex items-center justify-center w-10 h-10 rounded-full border-2 mb-3
+                        transition-all duration-500 ${
+                          isActive 
+                            ? 'border-blue-400 bg-blue-700/80 text-white scale-110 mr-3' 
+                            : 'border-blue-800/30 bg-blue-900/30 text-gray-400 scale-100 mr-3'
+                        }`}
+                      style={{
+                        boxShadow: isActive ? '0 0 10px rgba(59, 130, 246, 0.6)' : 'none'
+                      }}
+                    >
+                      <span className="text-sm font-bold">{step.number}</span>
+                      
+                      {/* Clock border for step number */}
+                      {isActive && <ClockBorder position={index + 1} isActive={isActive} />}
+                    </div>
                   </div>
                   
                   {/* Enhanced title with transition effects */}
                   <h3 
-                    className={`text-3xl font-bold mb-3 flex items-center justify-center ${index % 2 === 0 ? 'md:justify-end' : 'md:justify-start'}
+                    className={`text-3xl font-bold mb-3 flex flex-col items-center justify-center ${index % 2 === 0 ? 'md:justify-end md:items-end' : 'md:justify-start md:items-start'}
                       transition-all duration-700 ${isActive ? 'text-blue-400 scale-105' : 'text-blue-600/70 scale-100'}`}
                     style={{
                       textShadow: isActive ? '0 0 15px rgba(59, 130, 246, 0.3)' : 'none'
                     }}
                   >
-                    <span className="md:hidden mr-2 text-xl bg-blue-600/20 rounded-full w-8 h-8 flex items-center justify-center">
-                      {step.number}
-                    </span>
-                    {step.title}
+                    {/* Mobile number display */}
+                    <div className="md:hidden relative mb-2 flex items-center justify-center">
+                      <span 
+                        className={`relative flex items-center justify-center w-10 h-10 rounded-full border-2 text-sm font-bold
+                          transition-all duration-500 ${
+                            isActive 
+                              ? 'border-blue-400 bg-blue-700/80 text-white scale-110' 
+                              : 'border-blue-800/30 bg-blue-900/30 text-gray-400 scale-100'
+                          }`}
+                        style={{
+                          boxShadow: isActive ? '0 0 10px rgba(59, 130, 246, 0.6)' : 'none'
+                        }}
+                      >
+                        {step.number}
+                        
+                        {/* Clock border for mobile number */}
+                        {isActive && <ClockBorder position={index + 1} isActive={isActive} />}
+                      </span>
+                    </div>
+                    
+                    <span>{step.title}</span>
                   </h3>
                   
                   {/* Enhanced description with better visibility */}
@@ -271,7 +336,7 @@ const WebsiteDesignProject = () => {
                 {index < designSteps.length - 1 && (
                   <div 
                     className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 
-                      w-1 h-16 hidden md:block transition-all duration-700 ease-out
+                      w-1 h-16 hidden md:block transition-all duration-300 ease-out
                       ${isActive && index + 1 <= activeIndex ? 'bg-blue-500' : 'bg-blue-600/20'}`}
                     style={{
                       boxShadow: isActive && index + 1 <= activeIndex ? '0 0 10px rgba(59, 130, 246, 0.6)' : 'none'
@@ -286,7 +351,7 @@ const WebsiteDesignProject = () => {
         {/* Call to action */}
         <div className={`text-center mt-24 bg-blue-900/50 backdrop-blur-sm p-10 rounded-xl 
           border border-blue-800/50 max-w-2xl mx-auto transform transition-all duration-1000 
-          hover:shadow-xl hover:shadow-blue-600/10 ${activeIndex >= designSteps.length - 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+          hover:shadow-xl hover:shadow-blue-600/10 ${scrollProgress > 0.8 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           <h3 className="text-2xl font-bold text-white mb-4">Ready to Start Your Project?</h3>
           <p className="text-blue-300 mb-6">Let's bring your vision to life with our expert team and proven process</p>

@@ -1,4 +1,4 @@
-/* src/styles/MainHome.css - COMPLETE VERSION */
+/* src/styles/MainHome.css - COMPLETE VERSION WITH ALL ANIMATIONS */
 
 /* Client Logo Slider Animation */
 @keyframes marquee {
@@ -186,6 +186,60 @@
   animation: step-pop-in 0.6s ease-out forwards;
 }
 
+/* Animation for the dot that moves along the circle path */
+@keyframes dot-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.8;
+  }
+}
+
+.animate-dot-move {
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+
+/* Animation for the glowing effect */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.7);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s infinite ease-in-out;
+}
+
+/* Dash Circle Animation */
+@keyframes dash-rotate {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+.animate-dash {
+  stroke-dasharray: 10 5;
+  animation: dash-rotate 20s linear infinite;
+}
+
+/* Animation for the step reveal */
+@keyframes step-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* Shine Effect for Process Icons */
 @keyframes shine {
   0% {
@@ -262,6 +316,35 @@
   animation: icon-grow 0.5s ease-out forwards;
 }
 
+/* Arc Draw Animation */
+@keyframes arc-draw {
+  0% {
+    stroke-dasharray: 0 301;
+  }
+  100% {
+    stroke-dasharray: 301 301;
+  }
+}
+
+.animate-arc-draw {
+  animation: arc-draw 1.5s ease-out forwards;
+}
+
+/* Dot Movement Animation along Arc */
+@keyframes dot-travel {
+  0% {
+    transform: rotate(0deg) translateY(-48px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateY(-48px) rotate(-360deg);
+  }
+}
+
+.animate-dot-travel {
+  transform-origin: center;
+  animation: dot-travel 5s linear infinite;
+}
+
 /* Active Timeline Element Animation */
 @keyframes active-step {
   0% {
@@ -309,18 +392,6 @@
   animation: glow 5s ease-in-out infinite;
 }
 
-/* Dash Circle Animation */
-@keyframes dash-rotate {
-  to {
-    stroke-dashoffset: -100;
-  }
-}
-
-.animate-dash {
-  stroke-dasharray: 10 5;
-  animation: dash-rotate 20s linear infinite;
-}
-
 /* Text Reveal Animation */
 @keyframes text-reveal {
   0% {
@@ -350,6 +421,49 @@
   animation: wave-bg 15s ease infinite;
 }
 
+/* Clock-specific animations */
+@keyframes clock-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-clock-spin {
+  animation: clock-spin 30s linear infinite;
+}
+
+/* Clock hand animation */
+@keyframes clock-hand {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-clock-hand {
+  transform-origin: center;
+  animation: clock-hand 5s linear infinite;
+}
+
+/* Arc fill animation with customizable duration */
+@keyframes arc-fill {
+  0% {
+    stroke-dasharray: 0 301;
+  }
+  100% {
+    stroke-dasharray: var(--arc-length, 150) 301;
+  }
+}
+
+.animate-arc-fill {
+  animation: arc-fill 1s ease-out forwards;
+}
+
 /* Staggered fade in for multiple elements */
 .stagger-fade > *:nth-child(1) { animation-delay: 0.1s; }
 .stagger-fade > *:nth-child(2) { animation-delay: 0.2s; }
@@ -357,3 +471,44 @@
 .stagger-fade > *:nth-child(4) { animation-delay: 0.4s; }
 .stagger-fade > *:nth-child(5) { animation-delay: 0.5s; }
 .stagger-fade > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* Clock circle glowing effect */
+.clock-circle {
+  filter: drop-shadow(0 0 2px rgba(59, 130, 246, 0.5));
+  transition: filter 0.3s ease-out;
+}
+
+.clock-circle.active {
+  filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.8));
+}
+
+/* Additional hover effects for the process elements */
+.process-icon:hover .clock-circle {
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.9));
+}
+
+.process-number:hover {
+  transform: scale(1.1);
+}
+
+/* Focus animations for accessibility */
+.process-icon:focus, .process-number:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+/* More optimized pulse animation specifically for dots */
+@keyframes optimized-pulse {
+  0%, 100% {
+    opacity: 0.9;
+    filter: blur(0px);
+  }
+  50% {
+    opacity: 1;
+    filter: blur(1px);
+  }
+}
+
+.optimized-pulse {
+  animation: optimized-pulse 2s ease-in-out infinite;
+}
