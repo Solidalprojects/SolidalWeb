@@ -2,7 +2,6 @@
 import { useEffect } from 'react';
 import ImprovedAbout from '../components/About';
 import Testimonials from '../components/Testimonials';
-import ClientLogoSlider from '../components/ClientLogoSlider';
 
 const AboutPage = () => {
   useEffect(() => {
@@ -15,7 +14,7 @@ const AboutPage = () => {
   
   return (
     <main>
-      {/* Hero Banner */}
+      {/* Hero Banner - Note the updated background gradient to match ImprovedAbout */}
       <div className="pt-20 bg-gradient-to-b from-gray-900 to-blue-950 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
@@ -49,10 +48,8 @@ const AboutPage = () => {
         </div>
       </div>
       
-      {/* Main Content */}
+      {/* Main Content - ImprovedAbout starts with bg-gradient-to-b from-gray-900 to-gray-800 */}
       <ImprovedAbout />
-      
-
       
       {/* Testimonials */}
       <Testimonials />

@@ -13,7 +13,7 @@ interface TeamMember {
 }
 
 const ImprovedAbout = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [] = useState(0);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   
@@ -143,7 +143,7 @@ const ImprovedAbout = () => {
   return (
     <div ref={sectionRef} className="relative overflow-hidden">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-b from-gray-900 to-blue-950 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-b from-blue-950 to-blue-950 relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Animated gradient blobs */}
@@ -225,7 +225,7 @@ const ImprovedAbout = () => {
       {/* Our Story Section */}
       <section 
         ref={storyRef}
-        className="py-24 bg-gray-800 relative overflow-hidden"
+        className="py-24 bg-gradient-to-b from-blue-950 to-gray-900 relative overflow-hidden"
       >
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">

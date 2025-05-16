@@ -1,5 +1,5 @@
 // src/components/Services.tsx
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
@@ -237,14 +237,6 @@ const Services = () => {
     }
   };
   
-  const serviceItemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
 
   return (
     <section className="py-20 bg-gradient-to-b from-gray-900 to-blue-950 relative overflow-hidden">
