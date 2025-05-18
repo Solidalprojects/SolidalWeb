@@ -26,9 +26,9 @@ interface ClientAuthResponse {
 export const supportedClientSites: ClientSite[] = [
   {
     name: "TolaTiles",
-    domain: "http://127.0.0.1:8000", // For development/testing
+    domain: "http://tolatiles.com", // For development/testing
     logo: tolatiles,
-    customRedirectUrl: "http://localhost:3001/auth/dashboard" // Custom fully-qualified URL
+    customRedirectUrl: "http://tolatiles.com/auth/dashboard" // Custom fully-qualified URL
   },
 ];
 
