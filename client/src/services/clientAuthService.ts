@@ -28,7 +28,7 @@ export const supportedClientSites: ClientSite[] = [
     name: "TolaTiles",
     domain: "http://tolatiles.com", // For development/testing
     logo: tolatiles,
-    customRedirectUrl: "http://tolatiles.com/auth/dashboard" // Custom fully-qualified URL
+    customRedirectUrl: "https://tolatiles.com/auth/dashboard" // Custom fully-qualified URL
   },
 ];
 
