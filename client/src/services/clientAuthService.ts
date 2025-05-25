@@ -29,7 +29,7 @@ export const supportedClientSites: ClientSite[] = [
     name: "TolaTiles",
     domain: "https://tolatiles.com", 
     logo: tolatiles,
-    customRedirectUrl: "https://tolatiles.com/admin/" // Fixed to use /admin/ path
+    customRedirectUrl: "https://tolatiles.com/auth/dashboard"  
   },
 ];
 
